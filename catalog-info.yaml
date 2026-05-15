@@ -15,4 +15,4 @@ spec:
   # Vinculado ao domínio financeiro
   domain: financeiro
   # Agrupador lógico para os serviços de PIX
-  system: pix-ecosystem
+  system: system:pix-ecosystem
