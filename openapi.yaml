@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: PIX Gateway Service API
+  description: Gateway de entrada para transações PIX
+  version: 1.0.0
+  contact:
+    name: Equipe PIX
+    email: pix@zetra-bank.com
+
+servers:
+  - url: https://api.zetra-bank.com/pix-gateway
+    description: Production
+
+paths:
+  /pix/send:
+    post:
+      summary: Enviar transação PIX
+      operationId: sendPixTransaction
+      tags:
+        - PIX Transactions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountId:
+                  type: string
+                amount:
+                  type: number
+                recipientKey:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: PIX enviado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactionId:
+                    type: string
+                  status:
+                    type: string
+                    enum: [PENDING, PROCESSING, COMPLETED, FAILED]
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /pix/receive:
+    post:
+      summary: Receber transação PIX
+      operationId: receivePixTransaction
+      tags:
+        - PIX Transactions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transactionId:
+                  type: string
+                accountId:
+                  type: string
+      responses:
+        '200':
+          description: PIX recebido com sucesso
+
+  /pix/{transactionId}:
+    get:
+      summary: Consultar status de uma transação PIX
+      operationId: getPixTransactionStatus
+      tags:
+        - PIX Transactions
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Status da transação
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactionId:
+                    type: string
+                  status:
+                    type: string
+                  amount:
+                    type: number
+                  sender:
+                    type: string
+                  recipient:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /pix/dict/lookup:
+    get:
+      summary: Buscar chave PIX no DICT
+      operationId: lookupPixKey
+      tags:
+        - PIX Dictionary
+      parameters:
+        - name: key
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Chave PIX (CPF, email, telefone, etc)
+        - name: keyType
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [CPF, EMAIL, PHONE, RANDOM]
+      responses:
+        '200':
+          description: Dados da chave PIX
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  keyType:
+                    type: string
+                  holder:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      document:
+                        type: string
+                  accountInfo:
+                    type: object
+                    properties:
+                      bank:
+                        type: string
+                      accountNumber:
+                        type: string
