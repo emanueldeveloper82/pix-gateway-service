@@ -2,25 +2,17 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: pix-gateway-service
-  description: "Interface com o Banco Central para transações Pix"
+  description: "Gateway de entrada para transações PIX, responsável por roteamento e segurança"
   annotations:
     github.com/project-slug: emanueldeveloper82/pix-gateway-service
+    # Habilita a aba de documentação técnica
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   lifecycle: production
+  # Vinculado ao grupo 'pix' definido no seu central-catalog
   owner: group:pix
-  system: system:instant-gateway
----
-apiVersion: backstage.io/v1alpha1
-kind: API
-metadata:
-  name: pix-gateway-api
-spec:
-  type: openapi
-  lifecycle: production
-  owner: group:pix
-  definition: |
-    openapi: 3.0.0
-    info:
-      title: Pix Gateway API
-      version: 1.0.0
+  # Vinculado ao domínio financeiro
+  domain: financeiro
+  # Agrupador lógico para os serviços de PIX
+  system: pix-ecosystem
