@@ -6,7 +6,6 @@ metadata:
   annotations:
     github.com/project-slug: emanueldeveloper82/pix-gateway-service
     backstage.io/techdocs-ref: dir:.
-    backstage.io/api-docs-ref: file: ./openapi.yaml
 spec:
   type: service
   lifecycle: production
