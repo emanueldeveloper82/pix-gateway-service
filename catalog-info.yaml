@@ -5,8 +5,8 @@ metadata:
   description: "Gateway de entrada para transações PIX, responsável por roteamento e segurança"
   annotations:
     github.com/project-slug: emanueldeveloper82/pix-gateway-service
-    # Habilita a aba de documentação técnica
     backstage.io/techdocs-ref: dir:.
+    backstage.io/api-docs-ref: file: ./openapi.yaml
 spec:
   type: service
   lifecycle: production
