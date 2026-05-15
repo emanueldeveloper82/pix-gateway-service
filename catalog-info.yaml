@@ -10,9 +10,22 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  # Vinculado ao grupo 'pix' definido no seu central-catalog
   owner: group:pix
-  # Vinculado ao domínio financeiro
   domain: financeiro
-  # Agrupador lógico para os serviços de PIX
   system: system:pix-ecosystem
+  providesApis:
+    - pix-gateway-api 
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: pix-gateway-api
+  description: "Especificação OpenAPI do Gateway Pix"
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:pix
+  system: system:pix-ecosystem
+  definition:
+    $text: ./openapi.yaml 
