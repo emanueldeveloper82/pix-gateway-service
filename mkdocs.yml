@@ -1,0 +1,4 @@
+site_name: pix-gateway-service
+# Plugins obrigatórios para o Backstage renderizar corretamente
+plugins:
+  - techdocs-core
